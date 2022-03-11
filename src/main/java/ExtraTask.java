@@ -84,7 +84,6 @@ public class ExtraTask {
         usersListWithIds.forEach(System.out::println);
     }
 
-
     public static void youngestUser(List<User> usersList) {
         Optional<User> youngest = usersList.stream().min(Comparator.comparingInt(User::getAge));
         if (youngest.isPresent()) {
@@ -98,19 +97,8 @@ public class ExtraTask {
             System.out.println(oldest);
         }
     }
-
-
-//    public static ArrayList<User> UsersArrayList(JSONArray usersJsonArray) {
-//        ArrayList<User> usersList = new ArrayList<>();
-////adding users to list
-//        usersJsonArray.forEach(user -> {
-//            JSONObject employeeObject = (JSONObject) ((JSONObject) user).get("user");
-//            User newUser = new User(employeeObject);
-//            usersList.add(newUser);
-//        });
-//        return usersList;
-//    }
 }
+
 
 //TODO: First complete step 1, then step 2 and etc...
 //TODO: Make application working. There could be problems with gradle, refresh dependencies.
