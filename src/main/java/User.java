@@ -12,24 +12,7 @@ public class User {
     private String email;
     private Integer userId;
 
-    public User(JSONObject employeeObject) {
-
-        this.firstname = (String) employeeObject.get("firstname");
-        this.lastname = (String) employeeObject.get("lastname");
-        this.city = (String) employeeObject.get("city");
-        this.country = (String) employeeObject.get("country");
-        this.email = (String) employeeObject.get("email");
-        this.countryCode = CountryCode.valueOf(employeeObject.get("countryCode").toString());
-
-        String ageString = (String) employeeObject.get("age");
-        this.age = Integer.parseInt(ageString);
-
-        String userIdString = (String) employeeObject.get("userid");
-        try {
-            this.userId = Integer.parseInt(userIdString);
-        } catch (NumberFormatException ex) {
-            //ignore
-        }
+    public User(){
     }
 
     @Override
@@ -51,11 +34,6 @@ public class User {
                 '}';
     }
 
-
-    public Integer getUserId() {
-        return userId;
-    }
-
     public String getFirstname() {
         return firstname;
     }
@@ -68,6 +46,9 @@ public class User {
         return city;
     }
 
+    public String getCountry() {
+        return country;
+    }
 
     public int getAge() {
         return age;
@@ -77,12 +58,12 @@ public class User {
         return countryCode;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
     public String getEmail() {
         return email;
+    }
+
+    public Integer getUserId() {
+        return userId;
     }
 
     public void setFirstname(String firstname) {
@@ -97,13 +78,12 @@ public class User {
         this.city = city;
     }
 
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public void setCountryCode(CountryCode countryCode) {

@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ExtraTask {
+    final static public int ID_BOUNDARY = 10000;
 
     public static void main(String[] args) {
         JSONParser jsonParser = new JSONParser();
@@ -29,42 +30,24 @@ public class ExtraTask {
                 countryCodeList.add(county);
             });
             System.out.println(countryCodeList);
-
  */
 
-            List<User> usersList = new ArrayList<>();
-//adding users to list
-            usersJsonArray.forEach(user -> {
-                JSONObject employeeObject = (JSONObject) ((JSONObject) user).get("user");
-                User newUser = new User(employeeObject);
-                usersList.add(newUser);
-            });
+            List<User> usersList = UsersToArrayList(usersJsonArray);
 
             System.out.println("\n______________original_______________");
             usersList.forEach(System.out::println);
 
             System.out.println("\n______________order by age ASC_______________");
-            usersList.sort(Comparator.comparingInt(User::getAge));
-            usersList.forEach(System.out::println);
+            printUsersByAgeAsc(usersList);
 
-
-            System.out.println("\n______________id > 10000_______________");
-            List<User> usersListWithIdsMoreThan10000 = usersList.stream()
-                    .filter(user -> user.getUserId() != null)
-                    .filter(user -> user.getUserId() > 10000)
-                    .collect(Collectors.toList());
-            usersListWithIdsMoreThan10000.forEach(System.out::println);
+            System.out.println("\n______________id >" + ID_BOUNDARY + "_______________");
+            printUsersWithIdsGreaterThanConst(usersList);
 
             System.out.println("\n______________youngest_______________");
-            Optional<User> youngest = usersList.stream().min(Comparator.comparingInt(User::getAge));
-            if (youngest.isPresent()) {
-                System.out.println(youngest);
-            }
+            youngestUser(usersList);
+
             System.out.println("\n______________oldest_______________");
-            Optional<User> oldest = usersList.stream().max(Comparator.comparingInt(User::getAge));
-            if (youngest.isPresent()) {
-                System.out.println(oldest);
-            }
+            oldestUser(usersList);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -74,6 +57,59 @@ public class ExtraTask {
             e.printStackTrace();
         }
     }
+
+    public static ArrayList<User> UsersToArrayList(JSONArray usersJsonArray) {
+        ArrayList<User> usersList = new ArrayList<>();
+        UserConverter converter = new UserConverter();
+
+        //adding converted users to list
+        usersJsonArray.forEach(user -> {
+            JSONObject employeeObject = (JSONObject) ((JSONObject) user).get("user");
+            User newUser = converter.convertUser(employeeObject);
+            usersList.add(newUser);
+        });
+        return usersList;
+    }
+
+    public static void printUsersByAgeAsc(List<User> usersList) {
+        usersList.sort(Comparator.comparingInt(User::getAge));
+        usersList.forEach(System.out::println);
+    }
+
+    public static void printUsersWithIdsGreaterThanConst(List<User> usersList) {
+        List<User> usersListWithIds = usersList.stream()
+                .filter(user -> user.getUserId() != null)
+                .filter(user -> user.getUserId() > ID_BOUNDARY)
+                .collect(Collectors.toList());
+        usersListWithIds.forEach(System.out::println);
+    }
+
+
+    public static void youngestUser(List<User> usersList) {
+        Optional<User> youngest = usersList.stream().min(Comparator.comparingInt(User::getAge));
+        if (youngest.isPresent()) {
+            System.out.println(youngest);
+        }
+    }
+
+    public static void oldestUser(List<User> usersList) {
+        Optional<User> oldest = usersList.stream().max(Comparator.comparingInt(User::getAge));
+        if (oldest.isPresent()) {
+            System.out.println(oldest);
+        }
+    }
+
+
+//    public static ArrayList<User> UsersArrayList(JSONArray usersJsonArray) {
+//        ArrayList<User> usersList = new ArrayList<>();
+////adding users to list
+//        usersJsonArray.forEach(user -> {
+//            JSONObject employeeObject = (JSONObject) ((JSONObject) user).get("user");
+//            User newUser = new User(employeeObject);
+//            usersList.add(newUser);
+//        });
+//        return usersList;
+//    }
 }
 
 //TODO: First complete step 1, then step 2 and etc...
