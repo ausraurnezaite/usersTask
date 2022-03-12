@@ -20,7 +20,6 @@ public class UserConverter {
         } catch (NumberFormatException | NullPointerException ex) {
             //ignore
         }
-
         return user;
     }
 }

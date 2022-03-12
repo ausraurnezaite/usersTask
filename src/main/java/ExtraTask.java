@@ -21,18 +21,7 @@ public class ExtraTask {
             Object obj = jsonParser.parse(reader);
             JSONArray usersJsonArray = (JSONArray) obj;
 
-/*
-//getting all county codes
-            List<String> countryCodeList = new ArrayList<>();
-            usersJsonArray.forEach(user -> {
-                JSONObject employeeObject = (JSONObject) ((JSONObject) user).get("user");
-                String county = employeeObject.get("countryCode").toString();
-                countryCodeList.add(county);
-            });
-            System.out.println(countryCodeList);
- */
-
-            List<User> usersList = UsersToArrayList(usersJsonArray);
+            List<User> usersList = usersToArrayList(usersJsonArray);
 
             System.out.println("\n______________original_______________");
             usersList.forEach(System.out::println);
@@ -58,7 +47,7 @@ public class ExtraTask {
         }
     }
 
-    public static ArrayList<User> UsersToArrayList(JSONArray usersJsonArray) {
+    public static ArrayList<User> usersToArrayList(JSONArray usersJsonArray) {
         ArrayList<User> usersList = new ArrayList<>();
         UserConverter converter = new UserConverter();
 
@@ -98,7 +87,6 @@ public class ExtraTask {
         }
     }
 }
-
 
 //TODO: First complete step 1, then step 2 and etc...
 //TODO: Make application working. There could be problems with gradle, refresh dependencies.
